@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bất Động Sản 3 Miền - Mua Bán Nhà Đất Toàn Quốc</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>BĐS 3 Miền</h1>
+                        <span>Kết nối bất động sản</span>
+                    </div>
+                </div>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-link active">
+                    <i class="fas fa-home"></i>
+                    <span>Trang chủ</span>
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-tag"></i>
+                    <span>Nhà đất bán</span>
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-key"></i>
+                    <span>Nhà đất thuê</span>
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-city"></i>
+                    <span>Dự án</span>
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-newspaper"></i>
+                    <span>Tin tức</span>
+                </a>
+            </nav>
+            <div class="nav-actions">
+                <div class="user-menu">
+                    <button class="btn btn-ghost" onclick="toggleSavedProperties()">
+                        <i class="fas fa-heart"></i>
+                        <span class="saved-count">3</span>
+                    </button>
+                    <button class="btn btn-ghost" onclick="toggleNotifications()">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-dot"></span>
+                    </button>
+                </div>
+                <button class="btn btn-outline" onclick="showLoginModal()">
+                    <i class="fas fa-user"></i>
+                    Đăng nhập
+                </button>
+                <button class="btn btn-primary" onclick="showPostPropertyModal()">
+                    <i class="fas fa-plus"></i>
+                    Đăng tin
+                </button>
+                <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-star"></i>
+                    <span>Nền tảng BĐS #1 Việt Nam</span>
+                </div>
+                <h2>Tìm kiếm bất động sản <span class="highlight">toàn quốc</span></h2>
+                <p>Kết nối <strong>người mua - người thuê - chủ nhà - môi giới</strong> với hơn <strong>50,000+</strong> tin đăng</p>
+                
+                <!-- Quick Stats -->
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">50K+</div>
+                        <div class="stat-label">Tin đăng</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">15K+</div>
+                        <div class="stat-label">Khách hàng</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">63</div>
+                        <div class="stat-label">Tỉnh thành</div>
+                    </div>
+                </div>
+                
+                <!-- Search Form -->
+                <div class="search-form">
+                    <div class="search-header">
+                        <div class="search-tabs">
+                            <button class="tab-btn active" data-type="ban">
+                                <i class="fas fa-tag"></i>
+                                <span>Nhà đất bán</span>
+                            </button>
+                            <button class="tab-btn" data-type="thue">
+                                <i class="fas fa-key"></i>
+                                <span>Nhà đất thuê</span>
+                            </button>
+                        </div>
+                        <button class="advanced-search-btn" onclick="toggleAdvancedSearch()">
+                            <i class="fas fa-sliders-h"></i>
+                            Tìm kiếm nâng cao
+                        </button>
+                    </div>
+                    
+                    <div class="search-inputs">
+                        <div class="input-group main-search">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Nhập địa điểm, dự án, đường phố..." id="searchKeyword">
+                            <button class="voice-search" onclick="startVoiceSearch()">
+                                <i class="fas fa-microphone"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="filter-row">
+                            <select id="regionSelect" class="select-input">
+                                <option value="">Tất cả khu vực</option>
+                                <option value="mien-bac">🏔️ Miền Bắc</option>
+                                <option value="mien-trung">🏖️ Miền Trung</option>
+                                <option value="mien-nam">🌴 Miền Nam</option>
+                            </select>
+                            
+                            <select id="propertyType" class="select-input">
+                                <option value="">Tất cả loại BĐS</option>
+                                <option value="nha-o">🏠 Nhà ở</option>
+                                <option value="can-ho">🏢 Căn hộ</option>
+                                <option value="dat-nen">🌱 Đất nền</option>
+                                <option value="mat-bang">🏪 Mặt bằng</option>
+                            </select>
+                            
+                            <select id="priceRange" class="select-input">
+                                <option value="">Tất cả mức giá</option>
+                                <option value="0-1">💰 Dưới 1 tỷ</option>
+                                <option value="1-3">💎 1 - 3 tỷ</option>
+                                <option value="3-5">👑 3 - 5 tỷ</option>
+                                <option value="5+">💸 Trên 5 tỷ</option>
+                            </select>
+                            
+                            <button class="btn btn-search" onclick="searchProperties()">
+                                <i class="fas fa-search"></i>
+                                <span>Tìm kiếm</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Search Panel -->
+                    <div class="advanced-search-panel" id="advancedSearchPanel">
+                        <div class="advanced-row">
+                            <div class="input-group">
+                                <label>Diện tích (m²)</label>
+                                <div class="range-inputs">
+                                    <input type="number" placeholder="Từ" id="areaFrom">
+                                    <span>-</span>
+                                    <input type="number" placeholder="Đến" id="areaTo">
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label>Số phòng ngủ</label>
+                                <select id="bedroomCount">
+                                    <option value="">Tất cả</option>
+                                    <option value="1">1 phòng</option>
+                                    <option value="2">2 phòng</option>
+                                    <option value="3">3 phòng</option>
+                                    <option value="4+">4+ phòng</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Hướng nhà</label>
+                                <select id="direction">
+                                    <option value="">Tất cả hướng</option>
+                                    <option value="dong">Đông</option>
+                                    <option value="tay">Tây</option>
+                                    <option value="nam">Nam</option>
+                                    <option value="bac">Bắc</option>
+                                    <option value="dong-nam">Đông Nam</option>
+                                    <option value="tay-nam">Tây Nam</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Search Suggestions -->
+                <div class="quick-suggestions">
+                    <span class="suggestion-label">Tìm kiếm phổ biến:</span>
+                    <div class="suggestion-tags">
+                        <button class="suggestion-tag" onclick="quickSearch('Quận 7')">Quận 7</button>
+                        <button class="suggestion-tag" onclick="quickSearch('Thủ Đức')">Thủ Đức</button>
+                        <button class="suggestion-tag" onclick="quickSearch('Hà Nội')">Hà Nội</button>
+                        <button class="suggestion-tag" onclick="quickSearch('Đà Nẵng')">Đà Nẵng</button>
+                        <button class="suggestion-tag" onclick="quickSearch('Căn hộ')">Căn hộ</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Properties -->
+    <section class="featured-properties">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-title">
+                    <h3>Bất động sản nổi bật</h3>
+                    <p>Những tin đăng được quan tâm nhiều nhất</p>
+                </div>
+                <div class="section-controls">
+                    <div class="view-toggle">
+                        <button class="view-btn active" data-view="grid" onclick="changeView('grid')">
+                            <i class="fas fa-th-large"></i>
+                        </button>
+                        <button class="view-btn" data-view="list" onclick="changeView('list')">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                    <div class="sort-dropdown">
+                        <select id="sortBy" onchange="sortProperties()">
+                            <option value="newest">Mới nhất</option>
+                            <option value="price-asc">Giá thấp đến cao</option>
+                            <option value="price-desc">Giá cao đến thấp</option>
+                            <option value="area-desc">Diện tích lớn nhất</option>
+                            <option value="vip">VIP trước</option>
+                        </select>
+                    </div>
+                    <button class="filter-btn" onclick="showFilterModal()">
+                        <i class="fas fa-filter"></i>
+                        Lọc
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filter Tags -->
+            <div class="active-filters" id="activeFilters">
+                <!-- Active filter tags will appear here -->
+            </div>
+
+            <!-- Properties Grid -->
+            <div class="properties-container">
+                <div class="properties-grid" id="propertiesGrid">
+                    <!-- Properties will be loaded here -->
+                </div>
+                
+                <!-- Load More Button -->
+                <div class="load-more-section">
+                    <button class="btn btn-outline load-more-btn" onclick="loadMoreProperties()">
+                        <i class="fas fa-plus"></i>
+                        Xem thêm bất động sản
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Insights -->
+    <section class="market-insights">
+        <div class="container">
+            <div class="section-header">
+                <h3>Thông tin thị trường</h3>
+                <p>Cập nhật xu hướng giá và giao dịch mới nhất</p>
+            </div>
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <div class="insight-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="insight-content">
+                        <h4>Giá BĐS tăng 8.5%</h4>
+                        <p>So với cùng kỳ năm trước</p>
+                        <span class="trend up">+8.5%</span>
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="insight-content">
+                        <h4>2,450 giao dịch</h4>
+                        <p>Thành công trong tháng</p>
+                        <span class="trend up">+12%</span>
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="insight-content">
+                        <h4>45 ngày trung bình</h4>
+                        <p>Thời gian bán thành công</p>
+                        <span class="trend down">-5 ngày</span>
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="insight-content">
+                        <h4>4.8/5 điểm</h4>
+                        <p>Đánh giá từ khách hàng</p>
+                        <span class="trend up">+0.2</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Regions -->
+    <section class="regions">
+        <div class="container">
+            <div class="section-header">
+                <h3>Khám phá bất động sản theo khu vực</h3>
+                <p>Tìm hiểu thị trường BĐS tại 63 tỉnh thành trên cả nước</p>
+            </div>
+            <div class="regions-grid">
+                <div class="region-card featured" onclick="filterByRegion('mien-bac')">
+                    <div class="region-image" style="background-image: url('https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=400&h=300&fit=crop')"></div>
+                    <div class="region-overlay"></div>
+                    <div class="region-content">
+                        <div class="region-icon">
+                            <i class="fas fa-mountain"></i>
+                        </div>
+                        <h4>Miền Bắc</h4>
+                        <p>Hà Nội, Hải Phòng, Quảng Ninh...</p>
+                        <div class="region-stats">
+                            <span class="stat">15,234 tin</span>
+                            <span class="stat">Từ 800tr</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="region-card" onclick="filterByRegion('mien-trung')">
+                    <div class="region-image" style="background-image: url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop')"></div>
+                    <div class="region-overlay"></div>
+                    <div class="region-content">
+                        <div class="region-icon">
+                            <i class="fas fa-umbrella-beach"></i>
+                        </div>
+                        <h4>Miền Trung</h4>
+                        <p>Đà Nẵng, Huế, Nha Trang...</p>
+                        <div class="region-stats">
+                            <span class="stat">8,567 tin</span>
+                            <span class="stat">Từ 1.2 tỷ</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="region-card" onclick="filterByRegion('mien-nam')">
+                    <div class="region-image" style="background-image: url('https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=400&h=300&fit=crop')"></div>
+                    <div class="region-overlay"></div>
+                    <div class="region-content">
+                        <div class="region-icon">
+                            <i class="fas fa-city"></i>
+                        </div>
+                        <h4>Miền Nam</h4>
+                        <p>TP.HCM, Cần Thơ, Vũng Tàu...</p>
+                        <div class="region-stats">
+                            <span class="stat">26,891 tin</span>
+                            <span class="stat">Từ 1.5 tỷ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="services">
+        <div class="container">
+            <div class="section-header">
+                <h3>Dịch vụ của chúng tôi</h3>
+                <p>Giải pháp toàn diện cho mọi nhu cầu bất động sản</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h4>Đăng tin miễn phí</h4>
+                    <p>Đăng tin bán/cho thuê BĐS hoàn toàn miễn phí với nhiều tính năng hấp dẫn</p>
+                    <ul>
+                        <li>✓ Không giới hạn số lượng tin</li>
+                        <li>✓ Hỗ trợ upload hình ảnh</li>
+                        <li>✓ Thống kê lượt xem chi tiết</li>
+                    </ul>
+                    <button class="btn btn-outline">Đăng tin ngay</button>
+                </div>
+                <div class="service-card featured">
+                    <div class="service-badge">Phổ biến</div>
+                    <div class="service-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h4>Gói VIP</h4>
+                    <p>Nâng cao hiệu quả với gói VIP - tin của bạn sẽ được ưu tiên hiển thị</p>
+                    <ul>
+                        <li>✓ Hiển thị ưu tiên trên đầu</li>
+                        <li>✓ Gắn nhãn VIP nổi bật</li>
+                        <li>✓ Không giới hạn hình ảnh</li>
+                        <li>✓ Hỗ trợ video giới thiệu</li>
+                    </ul>
+                    <button class="btn btn-primary">Nâng cấp VIP</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h4>Đẩy top tin</h4>
+                    <p>Đưa tin đăng lên vị trí đầu tiên trong kết quả tìm kiếm</p>
+                    <ul>
+                        <li>✓ Đẩy top theo giờ/ngày</li>
+                        <li>✓ Tăng lượt xem đáng kể</li>
+                        <li>✓ Linh hoạt thời gian</li>
+                    </ul>
+                    <button class="btn btn-outline">Đẩy top ngay</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h3>Khách hàng nói gì về chúng tôi</h3>
+                <p>Hơn 15,000 khách hàng đã tin tưởng và sử dụng dịch vụ</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"Tôi đã bán được nhà chỉ sau 2 tuần đăng tin. Giao diện dễ sử dụng, hỗ trợ tận tình."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face" alt="Nguyễn Văn A">
+                        </div>
+                        <div class="author-info">
+                            <h5>Nguyễn Văn A</h5>
+                            <span>Chủ nhà tại Quận 7</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"Là môi giới, tôi tìm được nhiều khách hàng tiềm năng qua nền tảng này. Rất hài lòng!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=60&h=60&fit=crop&crop=face" alt="Trần Thị B">
+                        </div>
+                        <div class="author-info">
+                            <h5>Trần Thị B</h5>
+                            <span>Môi giới BĐS</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"Tìm được căn hộ mơ ước với giá hợp lý. Thông tin minh bạch, chính xác."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face" alt="Lê Văn C">
+                        </div>
+                        <div class="author-info">
+                            <h5>Lê Văn C</h5>
+                            <span>Khách hàng mua nhà</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="logo-text">
+                            <h4>BĐS 3 Miền</h4>
+                            <span>Kết nối bất động sản</span>
+                        </div>
+                    </div>
+                    <p>Nền tảng bất động sản hàng đầu Việt Nam, kết nối hơn 50,000 tin đăng từ khắp 63 tỉnh thành.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-zalo"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Dành cho khách hàng</h4>
+                    <a href="#">Tìm kiếm BĐS</a>
+                    <a href="#">Dự án mới</a>
+                    <a href="#">Tin tức thị trường</a>
+                    <a href="#">Tư vấn pháp lý</a>
+                    <a href="#">Tính toán vay</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Dành cho chủ nhà</h4>
+                    <a href="#">Đăng tin miễn phí</a>
+                    <a href="#">Gói VIP</a>
+                    <a href="#">Đẩy top tin</a>
+                    <a href="#">Quản lý tin đăng</a>
+                    <a href="#">Thống kê hiệu quả</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Hỗ trợ</h4>
+                    <a href="#">Hướng dẫn sử dụng</a>
+                    <a href="#">Câu hỏi thường gặp</a>
+                    <a href="#">Liên hệ hỗ trợ</a>
+                    <a href="#">Báo cáo vi phạm</a>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>1900 1234</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>support@bds3mien.vn</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <p>&copy; 2024 BĐS 3 Miền. Tất cả quyền được bảo lưu.</p>
+                    <div class="footer-links">
+                        <a href="#">Điều khoản sử dụng</a>
+                        <a href="#">Chính sách bảo mật</a>
+                        <a href="#">Quy chế hoạt động</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Đăng nhập</h3>
+                <button class="modal-close" onclick="closeModal('loginModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="login-form">
+                    <div class="input-group">
+                        <label>Số điện thoại hoặc Email</label>
+                        <input type="text" placeholder="Nhập số điện thoại hoặc email">
+                    </div>
+                    <div class="input-group">
+                        <label>Mật khẩu</label>
+                        <input type="password" placeholder="Nhập mật khẩu">
+                    </div>
+                    <div class="form-options">
+                        <label class="checkbox">
+                            <input type="checkbox">
+                            <span>Ghi nhớ đăng nhập</span>
+                        </label>
+                        <a href="#" class="forgot-password">Quên mật khẩu?</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary full-width">Đăng nhập</button>
+                </form>
+                <div class="divider">
+                    <span>Hoặc đăng nhập bằng</span>
+                </div>
+                <div class="social-login">
+                    <button class="btn btn-social facebook">
+                        <i class="fab fa-facebook"></i>
+                        Facebook
+                    </button>
+                    <button class="btn btn-social google">
+                        <i class="fab fa-google"></i>
+                        Google
+                    </button>
+                </div>
+                <div class="register-link">
+                    Chưa có tài khoản? <a href="#" onclick="showRegisterModal()">Đăng ký ngay</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Post Property Modal -->
+    <div class="modal" id="postPropertyModal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3>Đăng tin bất động sản</h3>
+                <button class="modal-close" onclick="closeModal('postPropertyModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="post-steps">
+                    <div class="step active">
+                        <div class="step-number">1</div>
+                        <span>Thông tin cơ bản</span>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <span>Hình ảnh & Video</span>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <span>Xác nhận & Đăng tin</span>
+                    </div>
+                </div>
+                <form class="post-form">
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>Loại giao dịch *</label>
+                            <select required>
+                                <option value="">Chọn loại giao dịch</option>
+                                <option value="ban">Bán</option>
+                                <option value="thue">Cho thuê</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Loại bất động sản *</label>
+                            <select required>
+                                <option value="">Chọn loại BĐS</option>
+                                <option value="nha-o">Nhà ở</option>
+                                <option value="can-ho">Căn hộ</option>
+                                <option value="dat-nen">Đất nền</option>
+                                <option value="mat-bang">Mặt bằng</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Tiêu đề tin đăng *</label>
+                        <input type="text" placeholder="VD: Bán nhà phố 3 tầng mặt tiền đường lớn" required>
+                        <small>Tiêu đề hấp dẫn sẽ thu hút nhiều người xem hơn</small>
+                    </div>
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>Giá *</label>
+                            <input type="number" placeholder="Nhập giá" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Đơn vị</label>
+                            <select>
+                                <option value="vnd">VNĐ</option>
+                                <option value="ty">Tỷ VNĐ</option>
+                                <option value="trieu">Triệu VNĐ</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Diện tích (m²) *</label>
+                            <input type="number" placeholder="Diện tích" required>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline">Lưu nháp</button>
+                        <button type="submit" class="btn btn-primary">Tiếp tục</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <div class="fab-container">
+        <button class="fab main-fab" onclick="toggleFabMenu()">
+            <i class="fas fa-plus"></i>
+        </button>
+        <div class="fab-menu" id="fabMenu">
+            <button class="fab" onclick="showPostPropertyModal()" title="Đăng tin">
+                <i class="fas fa-home"></i>
+            </button>
+            <button class="fab" onclick="showCalculatorModal()" title="Tính toán vay">
+                <i class="fas fa-calculator"></i>
+            </button>
+            <button class="fab" onclick="scrollToTop()" title="Lên đầu trang">
+                <i class="fas fa-arrow-up"></i>
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="enhanced-features.js"></script>
+</body>
+</html>
